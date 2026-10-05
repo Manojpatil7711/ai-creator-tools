@@ -33,7 +33,7 @@ async function openrouter(prompt: string): Promise<ProviderResult> {
   const key = process.env.OPENROUTER_API_KEY;
   if (!key) throw new Error("not_configured");
 
-  const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+  const res = await fetch("https://openrouter.ai/api/v1/chat/completions", { signal: AbortSignal.timeout(7000),
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -59,7 +59,7 @@ async function groq(prompt: string): Promise<ProviderResult> {
   const key = process.env.GROQ_API_KEY;
   if (!key) throw new Error("not_configured");
 
-  const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+  const res = await fetch("https://api.groq.com/openai/v1/chat/completions", { signal: AbortSignal.timeout(6000),
     method: "POST",
     headers: {
       "content-type": "application/json",
