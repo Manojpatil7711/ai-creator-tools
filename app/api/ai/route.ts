@@ -114,8 +114,9 @@ export async function POST(request: Request) {
 
     const prompt = buildPrompt(workflow, requestText);
 
-    // OpenRouter is the primary provider. Groq and Gemini remain fallbacks.
-    for (const provider of [openrouter, groq, gemini]) {
+    // Quality-first, low-latency routing: Gemini first (already configured), then OpenRouter, then Groq.
+    // This avoids adding a new paid dependency while keeping fallbacks ready for traffic growth.
+    for (const provider of [gemini, openrouter, groq]) {
       try {
         return NextResponse.json(await provider(prompt));
       } catch {
