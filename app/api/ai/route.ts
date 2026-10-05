@@ -20,7 +20,7 @@ function buildPrompt(workflow: string, request: string) {
 async function gemini(prompt: string): Promise<ProviderResult> {
   const key = process.env.GEMINI_API_KEY;
   if (!key) throw new Error("not_configured");
-  const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key="+encodeURIComponent(key), {
+  const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key="+encodeURIComponent(key), {
     method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({contents:[{parts:[{text:prompt}]}]})
   });
   if(!res.ok) throw new Error("provider_error");
