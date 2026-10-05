@@ -12,7 +12,8 @@ export default function Home(){
   const [selected,setSelected]=useState("");
   const [prompt,setPrompt]=useState("");
   const [result,setResult]=useState("");
-  const [loading,setLoading]=useState(false);\n  const [usage,setUsage]=useState(0);
+  const [loading,setLoading]=useState(false);
+  const [usage,setUsage]=useState(0);
   async function generate(){
     if(!prompt.trim()||loading||usage>=10)return;
     setLoading(true);setResult("");
