@@ -17,9 +17,9 @@ export default function Home(){
   const [result,setResult]=useState("");
   const [loading,setLoading]=useState(false);
   const [usage,setUsage]=useState(0);
-  const [bonus,setBonus]=useState(0);
+  const [bonus,setBonus]=useState(0); const [copied,setCopied]=useState(false);
 
-  async function generate(){
+  async function copyResult(){ if(!result)return; await navigator.clipboard.writeText(result); setCopied(true); setTimeout(()=>setCopied(false),1500); }\n\n  async function generate(){
     if(!selected||!prompt.trim()||loading||(usage>=10&&bonus<=0))return;
     setLoading(true);setResult("");
     try{
@@ -44,7 +44,7 @@ export default function Home(){
         <textarea aria-label="AI Studio request" value={prompt} onChange={e=>setPrompt(e.target.value)} placeholder={selected?"Tell AI what you need for "+selected+"...":"Choose a workflow, then describe what you want..."}/>
         {usage>=10&&bonus===0&&<RewardedAdButton onReward={()=>setBonus(v=>v+1)} />}
         <button className="generate" disabled={!selected||!prompt.trim()||loading||(usage>=10&&bonus===0)} onClick={generate}>{loading?"Generating…":usage>=10&&bonus===0?"Daily limit reached":"Generate with AI →"}</button>
-        {result&&<div className="result"><div className="resulttitle">AI RESULT</div><pre>{result}</pre></div>}
+        {result&&<div className="result"><div className="resultbar"><div className="resulttitle">AI RESULT</div><button className="copy" type="button" onClick={copyResult}>{copied?"✓ Copied":"Copy"}</button></div><pre>{result}</pre></div>}
       </div>
     </section><footer><span>AI Creator Tools</span><span>Telegram • Fast • Secure • Scalable</span></footer>
   </main>
